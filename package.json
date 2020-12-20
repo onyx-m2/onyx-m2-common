@@ -12,7 +12,6 @@
   "scripts": {
     "prebuild": "npm run refreshdbc",
     "build": "microbundle-crl --no-compress --format modern,cjs",
-    "preinstall": "npm run refreshdbc",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
