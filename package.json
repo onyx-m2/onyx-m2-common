@@ -10,7 +10,9 @@
     "node": ">=10"
   },
   "scripts": {
+    "prebuild": "run-s refreshdbc",
     "build": "microbundle-crl --no-compress --format modern,cjs",
+    "preinstall": "run-s refreshdbc",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
@@ -19,7 +21,8 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "refreshdbc": "node ./bin/refresh-dbc-data"
   },
   "peerDependencies": {
     "react": "^16.13.1",
@@ -46,7 +49,8 @@
     "gh-pages": "^2.2.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "axios": "^0.19.2"
   },
   "files": [
     "dist"
