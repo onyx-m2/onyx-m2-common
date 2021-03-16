@@ -57,7 +57,7 @@ export default class DBC {
 
   /**
    * Construct a DBC object using the specified pre-loaded data.
-   * @param {Object} definitions The parsed json data containing the message and signal definitions
+   * @param {Object} file The raw contents of a previously loaded dbc file.
    */
   constructor(file) {
     parseCategoriesAndMessages(this, file)
@@ -72,7 +72,7 @@ export default class DBC {
   }
 
   /**
-   * Remove indexes from generated JSON representation.
+   * Override json conversion to remove indexes from generated output.
    */
   toJSON() {
     const { categories, messages } = this
@@ -154,7 +154,7 @@ export default class DBC {
   }
 
   /**
-   * Get the  category that matches the specified slug.
+   * Get the category that matches the specified slug.
    * @param {String} slug
    */
   getCategory(slug) {
@@ -198,6 +198,14 @@ export default class DBC {
     return signals
   }
 
+  /**
+   * Decode a signal value using the signal's shape information from the DBC
+   * and the data in the specified bit view (an instance of a BitView from the
+   * 'bit-buffer' library).
+   * @param {*} bitView
+   * @param {*} signal
+   * @returns
+   */
   decodeSignal(bitView, signal) {
     try {
       const val = bitView.getBits(signal.start, signal.length, signal.signed)
@@ -207,6 +215,11 @@ export default class DBC {
     }
   }
 
+  /**
+   * Reverse lookup of a message using the mnemonic of a signal that belongs to
+   * that message.
+   * @param {*} mnemonic
+   */
   getSignalMessage(mnemonic) {
     return this.messageBySignalMnemonic[mnemonic]
   }

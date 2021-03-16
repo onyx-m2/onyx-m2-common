@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync } from 'fs'
-import { DBC } from '../src/utils/DBC'
+import { DBC } from '../src/DBC'
 
 const filename = process.argv[2]
 const file = readFileSync(filename, 'utf8')

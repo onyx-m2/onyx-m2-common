@@ -1,5 +1,11 @@
 {
   "name": "onyx-m2-common",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onyx-m2/onyx-m2-common"
+  },
+  "version": "0.0.2",
+  "license": "MIT",
   "main": "src/index.js",
   "type": "module",
   "dependencies": {
