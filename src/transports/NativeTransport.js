@@ -1,4 +1,4 @@
-import M2 from '../utils/M2'
+import M2 from '../M2'
 import { BitView } from 'bit-buffer'
 import Transport from './Transport'
 
