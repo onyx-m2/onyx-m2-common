@@ -1,6 +1,10 @@
 # Onyx M2 Common Library
 
-This library exposes functionality meant to be use on both the server and various
+This is part of the [Onyx M2 Project](https://github.com/onyx-m2), which enables
+read-only real-time access to the Tesla Model 3/Y CAN bus data, including the
+ability to run apps on the car's main screen through its built in web browser.
+
+This library exposes functionality meant to be used on both the server and various
 clients. The intent is these classes have minimal dependencies, and work in a
 Webpack and Nodejs world.
 
@@ -165,7 +169,9 @@ See [M2.js](./src/M2.js) for additional details.
 # Transports
 
 The transport abstraction is used to communicate between components of the project
-(m2, server, clients, etc). It exposes a pausable event stream.
+(m2, server, clients, etc). It exposes a pausable event stream. Transports are further
+categorizes as 'direct' or not. A direct transport is directly connected to the M2
+device.
 
 A transport implements the following functions:
 
@@ -174,7 +180,6 @@ A transport implements the following functions:
 | connect(`config`) | Connect the transport, passing in an implementation specific `config` |
 | addEventListener(`event`, `listener`) | Listen for the specified `event` and notify caller by invoking `listener` |
 | removeEventListener(`event`, `listener`) | Get the signal value that matches the specified mnemonic and name |
-| reconnect() | Reconnect the transport, typically used by stale connection detection functions |
 | reconnect() | Reconnect the transport, typically used by stale connection detection functions |
 | send(`event`, `data`) | Send an event to the M2  |
 | pause() | Pause a transport, holding all events until resume() is called |
@@ -185,9 +190,19 @@ The events sent and received by transports correspond to those documented in the
 [Client Interface](https://github.com/onyx-m2/onyx-m2-server/blob/master/README.md#client-interface)
 of the server's documentation.
 
-There are implementations for native bindings (used in the mobile app), and web socket
-bindings (used by apps running in the car's main display browser). See
-[Transport.js](./src/transports/Transport.js) and subclasses for additional details.
+There are currently 3 transport implementations.
+
+  1. `NativeTransport`: uses native bindings to connect to the M2 directly. This is
+     currently limited to app running in mobile app, like the instrument cluster.
+  1. `WebSocketTransport`: use a web socket to communicate with the M2 server to
+     relay commands and messages to and from the M2 device. This works well for apps
+     that run on the Tesla Model 3 main screen.
+  1. `WebBluetoothTransport`: use the experimental Web Bluetooth protocol to connect
+     directly to the M2 device. This works very well for apps running on custom hardware,
+     like on a Raspberry Pi, or from a laptop or mobile phone, all without requiring
+     any custom software be installed.
+
+See [Transport.js](./src/transports/Transport.js) and subclasses for additional details.
 
 **NOTE: This is currently only used by the client code, but a refactor is desired
         to make it work for the server too. Some concepts need adjustment though.**
