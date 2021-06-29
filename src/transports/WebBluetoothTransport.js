@@ -1,5 +1,5 @@
 import { BitView } from 'bit-buffer'
-import DirectTransport from './DirectTransport'
+import DirectTransport from './DirectTransport.js'
 
 // BLE interface
 const BLE_SERVICE_NAME = "Onyx M2"

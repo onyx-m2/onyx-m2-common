@@ -1,5 +1,5 @@
-import M2 from '../M2'
-import Transport from './Transport'
+import M2 from '../M2.js'
+import Transport from './Transport.js'
 
 const log = console
 

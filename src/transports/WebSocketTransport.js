@@ -1,5 +1,5 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import Transport from './Transport'
+import Transport from './Transport.js'
 
 /**
  * Implements a web socket transport that allows the app to work with the
