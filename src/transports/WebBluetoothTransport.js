@@ -105,14 +105,12 @@ export default class WebBluetoothTransport extends DirectTransport {
       this.writeCommandCharacteristic = serializePromises(v => commandCharacteristic.writeValue(v))
       this.setConnected(true)
       log.debug('GATT got command characteristic')
-
-      this.dispatchEvent('status', { detail: [ true, 0, 0 ] })
+      
       this.enableAllSubscribedMessages()
       }
     catch (e) {
       log.error(`Error connecting to M2.\n${e}`)
       this.setConnected(true)
-      this.dispatchEvent('status', { detail: [ true, 0, 0 ] })
       setTimeout(() => this.reconnect(), 2000)
     }
   }
@@ -150,6 +148,6 @@ export default class WebBluetoothTransport extends DirectTransport {
    */
   setConnected(connected) {
     this.connected = connected
-    this.dispatchEvent('status', { detail: [ connected, 0, 0 ] })
+    this.dispatchEvent('status', [ connected, 0, 0 ])
   }
 }
