@@ -248,7 +248,20 @@ function toName(mnemonic) {
 function parseCategoriesAndMessages(dbc, file) {
   const messages = []
   const lines = file.split(/\r?\n/)
+  var commentSection = false
   lines.forEach(line => {
+    // comment
+    if (line.startsWith('(*')) {
+      commentSection = true;
+      return
+    }
+    if (commentSection) {
+      if (line.endsWith('*)')) {
+        commentSection = false
+      }
+      return
+    }
+
     // message
     if (line.startsWith('BO_')) {
       const parts = /BO_ (\d+) (\w+_)?(\w+): (\d+) (\w+)/.exec(line)
